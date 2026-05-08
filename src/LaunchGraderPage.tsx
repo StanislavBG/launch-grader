@@ -1,7 +1,27 @@
 import { useState, useEffect, useRef } from 'react';
 import { SignInButton } from '@clerk/clerk-react';
 import { useToolApi } from './useToolApi.js';
-import { track, ToolHero, ScoreCard, SectionBreakdown, CrossPromo } from './kit.js';
+import { track, ToolHero, ScoreCard, SectionBreakdown, CrossPromo } from '@bilkobibitkov/host-kit';
+
+const LAUNCH_GRADER_THEME = {
+  heroGradient: 'from-[#0d1f1c] via-[#0a1714] to-[#0d1f1c]',
+  glowColor: 'rgba(20,184,166,0.14)',
+  accentText: 'text-teal-400',
+  accentTextLight: 'text-teal-500',
+};
+
+const CROSS_PROMO_ITEMS = [
+  {
+    name: 'PageRoast',
+    href: 'https://bilko.run/products/page-roast',
+    hook: 'Launch readiness checked. Now roast the landing page that sells it.',
+  },
+  {
+    name: 'StackAudit',
+    href: 'https://bilko.run/projects/stack-audit/',
+    hook: "Ready to launch? Make sure your stack isn't bleeding money first.",
+  },
+];
 
 // ── Inline sub-components for tutorial sections ──────────────────────────────
 
@@ -82,6 +102,7 @@ export function LaunchGraderPage() {
       </SignInButton>
 
       <ToolHero
+        theme={LAUNCH_GRADER_THEME}
         title="Is your product ready to launch?"
         tagline="AI audits your go-to-market readiness across 5 dimensions. Get a score, blockers, and a verdict."
       >
@@ -146,7 +167,7 @@ export function LaunchGraderPage() {
 
       {result && (
         <div ref={resultRef} className="max-w-2xl mx-auto px-6 pt-10 space-y-6 pb-16">
-          <ScoreCard score={result.total_score} grade={result.grade} verdict={result.roast} toolName="LaunchGrader" />
+          <ScoreCard score={result.total_score} grade={result.grade} verdict={result.roast} toolName="LaunchGrader" theme={LAUNCH_GRADER_THEME} />
 
           {/* Verdict Banner */}
           {result.verdict && (
@@ -186,7 +207,7 @@ export function LaunchGraderPage() {
             Competitors charge $30-100/month for this analysis. You just paid $1.
           </div>
 
-          <CrossPromo />
+          <CrossPromo items={CROSS_PROMO_ITEMS} />
 
           <div className="text-center pt-4">
             <button
